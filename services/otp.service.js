@@ -4,6 +4,7 @@ const QRCode = require("qrcode");
 module.exports = {
 	name: "otp",
 	actions: {
+		// generate the qr code 
 		generate(ctx) {
 			const secret = speakeasy.generateSecret({ length: 20 });
 		    // otpauth://totp/MyApp:undefined?secret=PIXDCYTNOQ7EGP3NOQXCGXLQNQ5TI6RQ&issuer=MyApp
@@ -19,7 +20,6 @@ module.exports = {
 							secret : secret.base32
 						}).then(()=>{
 							resolve({
-								// otp: secret.base32,
 								qrCodeUrl: dataUrl
 							});
 						})
@@ -28,10 +28,10 @@ module.exports = {
 				});
 			});
 		},
+		// validate the otp
 		async validate(ctx) {
 			const username = ctx.params.username;
 			const secretFromConfig = await ctx.call("config.validateSecretFromConfigFile" , {username : username});
-			console.log(secretFromConfig);
 			
 			const verified = speakeasy.totp.verify({
 				secret: secretFromConfig,

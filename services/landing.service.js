@@ -7,7 +7,7 @@
 
 /** @type {ServiceSchema} */
 module.exports = {
-	name: "testService",
+	name: "landingService",
 
 	/**
 	 * Settings

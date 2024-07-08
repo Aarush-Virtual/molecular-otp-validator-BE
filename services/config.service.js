@@ -21,14 +21,14 @@ module.exports = {
               const secrets = data ? JSON.parse(data) : [];
               const existingUser = secrets.find(u => u.username === username);
               if(existingUser) {
-                reject({error : "Username already exists " , success : false})
+                return reject({error : "Username already exists " , success : false})
               }
               const newEntry = { username, secret, time: new Date().toISOString() };
               secrets.push(newEntry);
               fs.writeFile(configFilePath, JSON.stringify(secrets, null, 2), 'utf8', (err) => {
                 if (err) {
                   console.log('error in the fs write file method  ' , err);
-                  reject(err);
+                  return reject(err);
                 } else {
                   resolve({ success: true });
                 }
